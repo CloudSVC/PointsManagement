@@ -1,7 +1,6 @@
 <script setup>
 import PopupBar from './PopupBar.vue';
 import Card from './Card.vue';
-import StepsPage from './StepsPage.vue';
 </script>
 
 <template>
@@ -11,16 +10,48 @@ import StepsPage from './StepsPage.vue';
                 <PopupBar />
             </el-aside>
             <el-main>
-                <Card />
-                <div class="steps">
-                    <StepsPage :active="active" :msg="msg" />
-                </div>
-                <!-- 点击按钮，将active进行到下一步 -->
-                <el-button @click="nextStep">下一步</el-button>
+                <Card :userinfo="userinfo" />
             </el-main>
         </el-container>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            userinfo: {
+                name: '',
+                uid: ''
+            }
+        }
+    },
+    methods: {
+        // 从Cookie中读取JSON数据
+        getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        },
+        // 验证登录
+        checkLogin() {
+            if (this.getCookie('token')) {
+                var token = this.getCookie('token');
+                token = JSON.parse(token);
+                this.userinfo.name = token.name;
+                this.userinfo.uid = token.email;
+            } else {
+                this.$message.error("请先登录");
+                this.$router.push('/');
+                return false;
+            }
+        },
+    }, 
+    mounted() {
+        this.checkLogin();
+    }
+}
+</script>
 
 <style>
 .steps {
@@ -32,16 +63,3 @@ import StepsPage from './StepsPage.vue';
     align-items: center;
 }
 </style>
-
-<script>
-import { ref } from 'vue';
-var active = ref(0);
-var msg = ref({
-    "status": "任务完成",
-    "score": 1
-});
-
-const nextStep = () => {
-    if (active.value++ > 2) active.value = 0;
-}
-</script>

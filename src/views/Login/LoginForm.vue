@@ -47,12 +47,20 @@ export default {
             // 登录逻辑
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
-                    // 在这里处理登录逻辑，例如向服务器发送登录请求
-                    alert(this.loginForm.email + ' 登录成功');
-                    // 登录成功后跳转到其他页面
-                    // this.$router.push('/home');
+                    this.$axios.post('http://localhost:8080/api/login', this.loginForm).then(res => {
+                        if (res.data.status == "true") {
+                            document.cookie = "token=" + JSON.stringify(JSON.parse(res.data.msg));
+                            // 登录成功
+                            this.$message.success('登录成功');
+                            // 跳转首页
+                            this.$router.push('/');
+                        } else {
+                            this.$message.error(res.data.msg);
+                        }
+                    });
                 } else {
-                    console.log('表单验证失败');
+                    this.$message.error('表单验证失败');
+                    // 阻止表单提交
                     return false;
                 }
             });
