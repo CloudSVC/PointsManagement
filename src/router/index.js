@@ -14,7 +14,7 @@ const routes = [
     path: '/admin',
     name: 'Home',
     component: HomePage,
-    meta: { title: '首页 By 暖暖的太阳' }
+    meta: { title: '管理员 By 暖暖的太阳' }
   },
   {
     path: '/mission',

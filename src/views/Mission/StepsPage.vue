@@ -58,7 +58,7 @@ export default {
           type: 'success',
         });
         // 发送 GET 请求
-        this.$axios.get('http://localhost:8080/api/addScore?email=' +  this.userinfo.uid + '&score=' + this.msg.score)
+        this.$axios.get('/api/addScore?email=' +  this.userinfo.uid + '&score=' + this.msg.score)
           .catch((error) => {
             this.$message.error('成绩提交失败');
           });

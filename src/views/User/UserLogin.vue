@@ -25,7 +25,7 @@ const handleLogin = () => {
             password: password.value
         };
         // 登录逻辑
-        axios.post('http://localhost:8080/api/login', loginData).then(res => {
+        axios.post('/api/login', loginData).then(res => {
             if (res.data.status == "true") {
                 document.cookie = "token=" + JSON.stringify(JSON.parse(res.data.msg));
                 // 跳转首页

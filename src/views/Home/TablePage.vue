@@ -39,7 +39,7 @@ export default {
   methods: {
     addRow() {
       // 发送 GET 请求
-      this.$axios.get('http://localhost:8080/api/users')
+      this.$axios.get('/api/users')
         .then((res) => {
           this.$message.success('榜单更新成功');
           var data = res.data; // res.data 已经是解析后的 JavaScript 对象或数组
@@ -62,7 +62,7 @@ export default {
     },
     showDrawer(email) {
       this.table = true;
-      this.$axios.get('http://localhost:8080/api/userMissions?email=' + email)
+      this.$axios.get('/api/userMissions?email=' + email)
         .then((res) => {
           this.gridData = res.data.map(item => ({
             name: item.name,

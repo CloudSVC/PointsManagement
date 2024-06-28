@@ -11,7 +11,16 @@ const loading = ref(false);
 const onRefresh = () => {
     loading.value = false;
     addMission();
+    updateScore();
 }
+
+const MyScore = ref(0);
+const updateScore = () =>{
+    axios.get('/api/getUserInfo?email=' + userinfo.value.uid)
+    .then((res) => {
+        MyScore.value = res.data.score;
+    })
+};
 
 // 使用 ref 声明响应式变量 missions
 const missions = ref([]);
@@ -21,7 +30,7 @@ const myMissions = ref([]);
 const addMission = () => {
     // 发送 GET 请求
     // 更新任务列表
-    axios.get('http://localhost:8080/api/missions')
+    axios.get('/api/missions')
         .then((res) => {
             var data = res.data; // res.data 已经是解析后的 JavaScript 对象或数组
             missions.value = res.data; // 使用 missions.value 更新数据
@@ -31,7 +40,7 @@ const addMission = () => {
             // 在这里处理请求失败的情况，比如显示错误信息等操作
         });
     // 更新我的任务列表
-    axios.get('http://localhost:8080/api/userMissions?email=' + userinfo.value.uid)
+    axios.get('/api/userMissions?email=' + userinfo.value.uid)
         .then((res) => {
             myMissions.value = res.data.map(mission => ({
                 ...mission,
@@ -55,7 +64,7 @@ const showMission = (id, name, describe, score) => {
         .then(() => {
             // on confirm
             showNotify({ type: 'success', message: "任务接取成功, 请前往我的任务查看", duration: 700 });
-            axios.get('http://localhost:8080/api/addUserMission?uid=' + userinfo.value.uuid + '&mid=' + id);
+            axios.get('/api/addUserMission?uid=' + userinfo.value.uuid + '&mid=' + id);
         })
 }
 const userinfo = ref({
@@ -106,6 +115,7 @@ const logout = () => {
 // 自动加载部分
 onMounted(() => {
     checkLogin();
+    updateScore();
 });
 </script>
 
@@ -139,7 +149,7 @@ onMounted(() => {
                                 .then(() => {
                                     item.active++;
                                     // 更新active
-                                    axios.get('http://localhost:8080/api/setActive?id=' + item.id + '&active=' + item.active);
+                                    axios.get('/api/setActive?id=' + item.id + '&active=' + item.active);
                                 })
                                 .catch(() => {
                                     // on cancel
@@ -148,9 +158,9 @@ onMounted(() => {
                             showNotify({ type: 'success', message: '获得积分：' + item.score, duration: 700 });
                             item.active++;
                             // 更新active
-                            axios.get('http://localhost:8080/api/setActive?id=' + item.id + '&active=' + item.active);
+                            axios.get('/api/setActive?id=' + item.id + '&active=' + item.active);
                             // 加分在这里进行
-                            axios.get('http://localhost:8080/api/addScore?email=' + userinfo.uid + '&score=' + item.score);
+                            axios.get('/api/addScore?email=' + userinfo.uid + '&score=' + item.score);
                             return;
                         } else {
                             showNotify({ type: 'success', message: '奖励已发放', duration: 700 });
@@ -181,7 +191,7 @@ onMounted(() => {
                 <van-cell-group inset>
                     <van-field label="用户名" :model-value="userinfo.name" readonly />
                     <van-field label="邮箱" :model-value="userinfo.uid" readonly />
-                    <van-field label="积分" :model-value="userinfo.score" readonly />
+                    <van-field label="积分" :model-value="MyScore" readonly />
                 </van-cell-group>
 
                 <van-button type="danger" size="large" style="margin-top: 60px;" @click="() => {

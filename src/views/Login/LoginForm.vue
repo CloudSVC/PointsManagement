@@ -47,7 +47,7 @@ export default {
             // 登录逻辑
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
-                    this.$axios.post('http://localhost:8080/api/login', this.loginForm).then(res => {
+                    this.$axios.post('/api/login', this.loginForm).then(res => {
                         if (res.data.status == "true") {
                             document.cookie = "token=" + JSON.stringify(JSON.parse(res.data.msg));
                             // 登录成功

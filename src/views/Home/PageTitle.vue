@@ -7,7 +7,7 @@
                 <span class="text-sm mr-2" style="color: var(--el-text-color-regular)">
                     x Vue 3.4.29
                 </span>
-                <el-tag>{{ uid }}</el-tag>
+                <el-tag>管理员</el-tag>
             </div>
         </template>
         <template #extra>
