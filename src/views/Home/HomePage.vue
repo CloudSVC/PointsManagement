@@ -1,6 +1,6 @@
 <script setup>
 import Card from './Card.vue'
-import PopupBar from './PopupBar.vue'
+// import PopupBar from './PopupBar.vue'
 import PageTitle from './PageTitle.vue'
 import TablePage from './TablePage.vue'
 </script>
@@ -8,9 +8,9 @@ import TablePage from './TablePage.vue'
 <template>
   <div class="common-layout">
     <el-container>
-      <el-aside width="70px">
+      <!-- <el-aside width="70px">
         <PopupBar />
-      </el-aside>
+      </el-aside> -->
       <el-main>
         <div class="page-title">
           <PageTitle></PageTitle>

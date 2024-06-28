@@ -4,7 +4,7 @@
       <el-icon><House /></el-icon>
       <template #title>首页</template>
     </el-menu-item>
-    <el-menu-item index="2" @click="$router.push('/mission')">
+    <el-menu-item index="2" @click="$router.push('/mission')" disabled>
       <el-icon><icon-menu /></el-icon>
       <template #title>任务中心</template>
     </el-menu-item>

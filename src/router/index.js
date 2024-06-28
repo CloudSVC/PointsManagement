@@ -5,11 +5,13 @@ import AboutPage from '../views/AboutPage.vue'
 import Login from '../views/Login/Login.vue'
 import Signup from '../views/Signup/SignupPage.vue'
 import Misssion from '../views/Mission/Mission.vue'
+import User from '../views/User/User.vue'
+import UserLogin from '@/views/User/UserLogin.vue';
 
 // 我们为每个路由添加了一个 meta 字段，用于存储页面的标题。
 const routes = [
   {
-    path: '/',
+    path: '/admin',
     name: 'Home',
     component: HomePage,
     meta: { title: '首页 By 暖暖的太阳' }
@@ -21,16 +23,16 @@ const routes = [
     meta: { title: '任务大厅 (=✪ᆽ✪=)' }
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login,
+    path: '/userlogin',
+    name: 'UserLogin',
+    component: UserLogin,
     meta: { title: '登录 (̷ ̷₌̷ ̷ㅇ̷ ̷ᆽ̷ ̷ㅇ̷ ̷₌̷ ̷)♡' }
   },
   {
-    path: '/signup',
-    name: 'Signup',
-    component: Signup,
-    meta: { title: '注册 (=✪ᆽ✪=)' }
+    path: '/',
+    name: 'User',
+    component: User,
+    meta: { title: '用户中心 (̷ ̷₌̷ ̷ㅇ̷ ̷ᆽ̷ ̷ㅇ̷ ̷₌̷ ̷)♡' }
   },
 ];
 
